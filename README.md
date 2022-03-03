@@ -158,3 +158,163 @@ WHERE row_num > 1
 ```
 
 ## Systems Design
+### 1. If you are a web administrator, and you receive an **DDoS Attack**, where there are “N millions” of hits at the same time, how do you avoid the servers going down?
+A good practice to have the time to react in case of DDoS Attack is to Overprovision bandwith than we are likely to use.
+In case of DDoS Attack, we can also buy more time if :
+- We rate limit our server to prevent the server to be overwhelmed
+- Timeout connections more aggressively
+- Add filter to the router to drop packets from the sources of attack we detect
+
+Call our ISP(Internet Service Provider) of Hosting Provider will surely help.
+They can null route our traffic to avoid the HTTP request (the most common attack on web server is overwhelming quantity of HTTP request).
+
+We can also call a DDoS Mitigation company with better infrastructure and technology to keep the website online during the DDoS Attack.
+
+The precedent steps can be automated by a DDoS playbook, by knowing our typical inbound traffic profile, a program will detect the anomaly of DDoS Attack directly (it can include AI).
+
+To rate limit our server, it exist the npm module express-rate-limit :
+https://www.npmjs.com/package/express-rate-limit 
+```js
+import rateLimit from 'express-rate-limit'
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter)
+```
+
+### 2. How would you design a link shortening URL system?
+For a link shortening URL system, we need to create short URL that redirect the user to the original page.
+This URL generated will have a short lifespan and will be store in a dataBase in SQL or noSQL
+A table URL will have:
+- the URL generated
+- the original URL
+- a creation date
+- an expiration date
+
+By using minuscule, majuscule and number [A-Z,a-z,0-9] we have 62 possibility by character
+The length of the URL we generate will depends of our needs, with 6 characters, we will have :
+62**6 possilité soit 56 billions of possibilities.
+
+The generation of URL will be 4 steps :
+- User ask to shorten an URL
+- Server send URL to encoding program (random suite of 6 characters)
+- Program store short URL into dataBase
+- Database verify no duplication and send the URL or an error to the server
+- Server send the short URL to the user or ask for another URL to the encoding program in case of error
+
+## Javascript
+### 1. What JavaScript libraries (or frameworks if you would prefer) have you used?
+Reactjs and Nextjs, Expressjs for node, also TypeScript but it's not really a framework.
+
+### 2. Explain AJAX in as much detail as possible. How does it work? What have you used it for in the past?
+AJAX or Asynchronous JavaScript and XML uses a combination of XMLHttpRequest and JavaScript and the DOM to display data to users.
+AJAX not have the obligation to use XML data, it can use plain text or JSON.
+AJAX asunchronous nature permit to communicate with a server, exchange data and update the webpage without having to refresh the page.
+An user will send a HTTPRequest to the server, the server will process the HTTPRequest, create a response and send it back to the browser which will process it and update the webpage.
+
+In my precedent internship, I had to fetch a big XML file with PDF info to show a PDF representation in the web browser.
+
+### 3. You want to get a query string parameter from the browser’s URL, how would you do it?
+```js
+const queryString = window.location.search; // Get the query string parameters
+const urlParams = new URLSearchParams(queryString); // Parse the query string and return a URLSearchParams object
+const parameters1 = urlParams.get('parameters1'); // return the value of the parameter1 in the browser's URL
+```
+
+### 4. What are ways to write object oriented JavaScript? For example, explain how inheritance works.
+In JavaScript, it's possible to work only with functions but also to use OOP with classes.
+This classes work like in java with a constructor, functions and parameters.
+In TypeScript, it's possible to replace this classes with interface to have objects with parameters and with functions that take in parameters this objects.
+With classes, it's possible to have inheritance, for example a classe imtStudents can inherit the parameters and the functions of the classe persons
+```js
+class persons{
+    name;
+    age;
+    constructor(name,age){
+        this.name=name;
+        this.age=age;
+    }
+    function gettingOlder(){
+        this.age++;
+    }
+}
+
+class imtStudents extends persons {
+    promo;
+    UV;
+    constructor(name,age,promo,UV){
+        super(name,age);
+        this.promo=promo;
+        this.age=age;
+    }
+    function repeatYear(){
+        this.promo++;
+    }
+}
+const me = new imtStudents('Guillaume',21,2023,'NU')
+me.gettingOlder();
+```
+In our example me can use the inherit the parameters of persons but also its functions.
+
+### 5. What is a "closure" and how/why use one?
+A closure is a function enclosed in another function, the local variables of the functions will be reusable. It's possible to build funny and flexible functions.
+```js
+function buildSentence(string){
+    return (stringToAdd) => {
+        console.log(string.concat(' ',stringToAdd));
+        return buildSentence(string.concat(' ',stringToAdd));
+    }
+}
+
+const sentence1 = buildSentence("I'm");
+const sentence2 = sentence1('your');
+const sentence3 = sentence2('father');
+const sentence4 = sentence3('Luc');
+// Also possible with sentence = buildSentence("I'm)('your')('father')('Luc')
+```
+It's also possible to keep in memory the impact of the precedent function to manipulate a variable.
+```js
+let counter = (() => {
+    let privateCounter = 0;
+    return {
+      add: (n) => {
+        privateCounter += n;
+      },
+      value: () => {
+        return privateCounter;
+      }
+    };
+})();
+counter.add(12);
+console.log(counter.value()) // 12
+counter.add(43)
+console.log(counter.value()) // 55
+```
+### 6. Make this work:
+```js
+
+[1,2,3,4,5].duplicator(); // [1,2,3,4,5,1,2,3,4,5]
+```
+
+## Regular Expressions
+### 1. Write a regular expression to match a machine's MAC address.
+```js
+const regexMacAddress = /[0-9A-F][0-9A-F][-:][0-9A-F][0-9A-F][-:][0-9A-F][0-9A-F][-:][0-9A-F][0-9A-F][-:][0-9A-F][0-9A-F][-:][0-9A-F][0-9A-F]/gi;
+const macAddress='9c:da:3e:c6:1c:77'
+console.log(regexMacAddress.test(macAddress));
+```
+The only problem with the RegExp is that if an address combine - and : it will accept it while it's not a MAC address.
+### 2. Write a simple regex for email validation?
+```js
+const regexEmail = /[a-z0-9-.]+@[a-z0-9-.]+\.[a-z0-9-.]+/gi;
+const email1='guillome.fore@gmail.com'
+const email2='rando-92648e585ff2599af7f7d3fc@candidates.welcomekit.co'
+console.log(regexEmail.test(email1));
+console.log(regexEmail.test(email2));
+```
