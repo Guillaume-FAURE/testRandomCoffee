@@ -2,6 +2,13 @@
 ## Algorithm
 ### 1. Write a function that takes two strings as arguments and returns a string containing only the characters found in both strings. How would you test it?
 ```ts
+/**
+ * @description Return the common characters of 2 strings, this function use RegExp to verify if the second string contain character of the first one.
+ * @param {string} string1 First string
+ * @param {string} string2 Second string
+ * @returns {Array<string>} the common characters of the 2 strings passed in parameters
+ */
+
 export function compareString(string1: string, string2: string): Array<string> {
   const string1Array = Array.from(string1); // string1 decomposed in characters
   const commonChar: Array<string> = []; // string to return
@@ -17,6 +24,12 @@ export function compareString(string1: string, string2: string): Array<string> {
   return commonChar;
 }
 
+/**
+ * @description Return the common characters of 2 strings, this function use the prototype includes() of the strings to verify if the second string contain character of the first one.
+ * @param {string} string1 First string
+ * @param {string} string2 Second string
+ * @returns {Array<string>} the common characters of the 2 strings passed in parameters
+ */
 export function compareStringBis(
   string1: string,
   string2: string,
@@ -38,6 +51,11 @@ export function compareStringBis(
 ```
 ### 2. Given two different lists of objects, come up with an efficient solution to find the intersection of the two lists.
 ```ts
+/**
+ * @param {Array<unknown>} array1 first array of objects
+ * @param {Array<unknown>} array2 second array of objects
+ * @returns {Array<unknown>} the common objects of 2 array of objects
+ */
 export function filteredList(
   array1: Array<unknown>,
   array2: Array<unknown>,
@@ -50,7 +68,17 @@ export function filteredList(
 }
 ```
 ### 3. Implement this function:
+```python
+f(0) = 0
+f(1) = 1
+f(n) = f(n-1) + f(n-2)
+```
 ```ts
+/**
+ * @description this function will push new value into the suite by iteration with while
+ * @param {number} n number of iterations for the suite
+ * @returns {Array<number>} an array of the n first number of the fibonnaci suite
+ */
 export function fibonnaciSuite(n: number): Array<number> {
   let a = 0;
   let b = 1;
@@ -68,6 +96,13 @@ export function fibonnaciSuite(n: number): Array<number> {
   return res;
 }
 
+/**
+ * @description recursive function to calculate the nth number of the fibonnaci suite
+ * @param {number} n number of iteration of the function
+ * @param {number} min minimum of the 2 values of the function : f(n-2)
+ * @param {number} max maximum of the 2 values of the function : f(n-1)
+ * @returns {number} the nth number of the fibonnaci suite
+ */
 export function fibonnaciSuiteOptimized(n: number, min = 0, max = 1): number {
   return n === 0 ? max : fibonnaciSuiteOptimized(n - 1, max, min + max);
 }
@@ -276,7 +311,7 @@ const sentence1 = buildSentence("I'm");
 const sentence2 = sentence1('your');
 const sentence3 = sentence2('father');
 const sentence4 = sentence3('Luc');
-// Also possible with sentence = buildSentence("I'm)('your')('father')('Luc')
+// Also possible with sentence = buildSentence("I'm")('your')('father')('Luc')
 ```
 It's also possible to keep in memory the impact of the precedent function to manipulate a variable.
 ```js
@@ -298,8 +333,14 @@ console.log(counter.value()) // 55
 ```
 ### 6. Make this work:
 ```js
-
-[1,2,3,4,5].duplicator(); // [1,2,3,4,5,1,2,3,4,5]
+Array.prototype.duplicator = function() { 
+    this.forEach((val)=>{
+        this.push(val)
+    })
+}
+const test = [1,2,3,4,5]
+test.duplicator();
+console.log(test); // [1,2,3,4,5,1,2,3,4,5]
 ```
 
 ## Regular Expressions

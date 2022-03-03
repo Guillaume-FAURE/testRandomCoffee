@@ -1,3 +1,10 @@
+/**
+ * @description Return the common characters of 2 strings, this function use RegExp to verify if the second string contain character of the first one.
+ * @param {string} string1 First string
+ * @param {string} string2 Second string
+ * @returns {Array<string>} the common characters of the 2 strings passed in parameters
+ */
+
 export function compareString(string1: string, string2: string): Array<string> {
   const string1Array = Array.from(string1); // string1 decomposed in characters
   const commonChar: Array<string> = []; // string to return
@@ -13,6 +20,12 @@ export function compareString(string1: string, string2: string): Array<string> {
   return commonChar;
 }
 
+/**
+ * @description Return the common characters of 2 strings, this function use the prototype includes() of the strings to verify if the second string contain character of the first one.
+ * @param {string} string1 First string
+ * @param {string} string2 Second string
+ * @returns {Array<string>} the common characters of the 2 strings passed in parameters
+ */
 export function compareStringBis(
   string1: string,
   string2: string,
@@ -32,6 +45,11 @@ export function compareStringBis(
   return commonChar;
 }
 
+/**
+ * @param {Array<unknown>} array1 first array of objects
+ * @param {Array<unknown>} array2 second array of objects
+ * @returns {Array<unknown>} the common objects of 2 array of objects
+ */
 export function filteredList(
   array1: Array<unknown>,
   array2: Array<unknown>,
@@ -43,6 +61,11 @@ export function filteredList(
   );
 }
 
+/**
+ * @description this function will push new value into the suite by iteration with while
+ * @param {number} n number of iterations for the suite
+ * @returns {Array<number>} an array of the n first number of the fibonnaci suite
+ */
 export function fibonnaciSuite(n: number): Array<number> {
   let a = 0;
   let b = 1;
@@ -60,6 +83,13 @@ export function fibonnaciSuite(n: number): Array<number> {
   return res;
 }
 
+/**
+ * @description recursive function to calculate the nth number of the fibonnaci suite
+ * @param {number} n number of iteration of the function
+ * @param {number} min minimum of the 2 values of the function : f(n-2)
+ * @param {number} max maximum of the 2 values of the function : f(n-1)
+ * @returns {number} the nth number of the fibonnaci suite
+ */
 export function fibonnaciSuiteOptimized(n: number, min = 0, max = 1): number {
   return n === 0 ? max : fibonnaciSuiteOptimized(n - 1, max, min + max);
 }
