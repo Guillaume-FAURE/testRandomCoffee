@@ -91,31 +91,42 @@ There is 4 differents join, the words in parenthesis aren't mandatory:
 - RIGHT (OUTER) JOIN : the right outer join return the second entire table and the intersection of the 2 tables
 - FULL (OUTER) JOIN : the full outer join return the 2 entire tables.
 
-Example with images with the tables created :
+Example is worth a thousand words :
+
+The tables we will use in the 4 examples:
+![Tables](https://user-images.githubusercontent.com/75898072/156549021-74db25bb-68e5-41d7-84d6-fb9d175003f7.png)
+
 INNER JOIN
 ```sql
 SELECT *
 FROM friends
 JOIN gender ON friends.gender_id = gender.id;
 ```
+![INNER JOIN](https://user-images.githubusercontent.com/75898072/156549025-0bc8bf94-71e1-4af2-a922-6f4c528228cc.png)
+
 LEFT JOIN
 ```sql
 SELECT *
 FROM friends
 LEFT JOIN gender ON friends.gender_id = gender.id;
 ```
+![LEFT JOIN](https://user-images.githubusercontent.com/75898072/156549027-d2503452-5fe2-4c34-9465-ddcac4560795.png)
+
 RIGHT JOIN
 ```sql
 SELECT *
 FROM friends
 RIGHT JOIN gender ON friends.gender_id = gender.id;
 ```
+![RIGHT JOIN](https://user-images.githubusercontent.com/75898072/156549029-2c6944c5-9e61-48ff-87fb-5e3235c88df0.png)
+
 FULL OUTER JOIN
 ```sql
 SELECT *
 FROM friends
 FULL OUTER JOIN gender ON friends.gender_id = gender.id;
 ```
+![FULL OUTER JOIN](https://user-images.githubusercontent.com/75898072/156549032-08b7ec9b-0a52-48ad-91e1-149460e43a58.png)
 
 ### 4. What is the difference between GROUP BY and ORDER BY?
 ORDER BY order the tables in function of value, number or character (order alphabetical) ascendant or descendant with the keyword ASC or DESC
