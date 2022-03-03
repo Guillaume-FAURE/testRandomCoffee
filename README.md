@@ -90,6 +90,7 @@ There is 4 differents join, the words in parenthesis aren't mandatory:
 - LEFT (OUTER) JOIN : the left outer join return the first entire table and the intersection of the 2 tables
 - RIGHT (OUTER) JOIN : the right outer join return the second entire table and the intersection of the 2 tables
 - FULL (OUTER) JOIN : the full outer join return the 2 entire tables.
+
 Example with images with the tables created :
 INNER JOIN
 ```sql
