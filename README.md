@@ -225,16 +225,19 @@ app.use(limiter)
 
 ### 2. How would you design a link shortening URL system?
 For a link shortening URL system, we need to create short URL that redirect the user to the original page.
-This URL generated will have a short lifespan and will be store in a dataBase in SQL or noSQL
+This URL generated will have a certain lifespan and will be store in a dataBase.
 A table URL will have:
 - the URL generated
 - the original URL
-- a creation date
 - an expiration date
+- possibly an user ID to link the table URL with a table Person
+
+There will be no relation link between table so it's more interesting to have a dataBase written in noSQL to have better performance such as MongoDB.
 
 By using minuscule, majuscule and number [A-Z,a-z,0-9] we have 62 possibility by character
 The length of the URL we generate will depends of our needs, with 6 characters, we will have :
 62**6 possilité soit 56 billions of possibilities.
+We could take the X first character of the hash constant to have our short URL.
 
 The generation of URL will be 4 steps :
 - User ask to shorten an URL
@@ -242,6 +245,16 @@ The generation of URL will be 4 steps :
 - Program store short URL into dataBase
 - Database verify no duplication and send the URL or an error to the server
 - Server send the short URL to the user or ask for another URL to the encoding program in case of error
+
+To avoid the need of verification of duplicate, we could assignate a number to a given URL, 0 for the first, 1 for the second...etc and encode this number (from 0 to 56 billions) to have our hash code. This manner of doing can imply a security threat because we use a sequential manner of generating URL.
+The problem is we will need a counter server to associate our URL to a number and a large number of server will send request to this server to encode the number and store it in a dataBase.
+
+To avoid this problem of request to a single server and the dependance to a single point of failure, we can add a distributed systems manager as Zookeeper and have each systems take the counter part of a millions of number for example.
+That way, if a server die, we lose 1 millions keys and not 56 billions.
+
+To improve efficience of our shortening URL system we can add :
+- A load balancer, a system we will see what servers (all linked to our Zookeeper counter) is the less occupied one, the one link with the less URL.
+- A cache of the most use URL to have faster access to the most demanded URL, we can put in the cache the X% the most demanded URL and update it each time a URL is more demanded.
 
 ## Javascript
 ### 1. What JavaScript libraries (or frameworks if you would prefer) have you used?
