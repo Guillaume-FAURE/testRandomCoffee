@@ -66,21 +66,14 @@ export function filteredList(
  * @param {number} n number of iterations for the suite
  * @returns {Array<number>} an array of the n first number of the fibonnaci suite
  */
-export function fibonnaciSuite(n: number): Array<number> {
-  let a = 0;
-  let b = 1;
-  const res: Array<number> = [a, b];
-  while (n > 0) {
-    if (a < b) {
-      a = a + b;
-      res.push(a);
-    } else {
-      b = a + b;
-      res.push(b);
-    }
-    n--;
+export function fibonnaciSuite(n: number): number {
+  const res: Array<number> = [0, 1];
+  for (let i = 0; i < n; i++) {
+    const tmp = res[0];
+    res[0] = res[1];
+    res[1] = tmp + res[1];
   }
-  return res;
+  return res[1];
 }
 
 /**

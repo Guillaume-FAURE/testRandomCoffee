@@ -58,9 +58,7 @@ test('Get the intersection of 2 lists of objects', () => {
     },
   ]);
   compareString;
-  expect(fibonnaciSuite(14)).toStrictEqual([
-    0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610,
-  ]);
+  expect(fibonnaciSuite(14)).toStrictEqual(610);
   expect(fibonnaciSuiteOptimized(13)).toStrictEqual(377);
-  expect(fibonnaciSuite(14)[13]).toEqual(fibonnaciSuiteOptimized(12));
+  expect(fibonnaciSuite(12)).toStrictEqual(fibonnaciSuiteOptimized(12));
 });

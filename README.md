@@ -79,21 +79,14 @@ f(n) = f(n-1) + f(n-2)
  * @param {number} n number of iterations for the suite
  * @returns {Array<number>} an array of the n first number of the fibonnaci suite
  */
-export function fibonnaciSuite(n: number): Array<number> {
-  let a = 0;
-  let b = 1;
-  const res: Array<number> = [a, b];
-  while (n > 0) {
-    if (a < b) {
-      a = a + b;
-      res.push(a);
-    } else {
-      b = a + b;
-      res.push(b);
-    }
-    n--;
+export function fibonnaciSuite(n: number): number {
+  const res: Array<number> = [0, 1];
+  for (let i = 0; i < n; i++) {
+    const tmp = res[0];
+    res[0] = res[1];
+    res[1] = tmp + res[1];
   }
-  return res;
+  return res[1];
 }
 
 /**
@@ -182,7 +175,7 @@ ORDER BY city ASC
 ```
 ### 5. Write a query to delete duplicate rows from a table.
 To delete duplicate rows from a table we can use the keyword PARTITION BY, a CTE (Common Table Expression).
-Example: We have a database of persons with characteristic name, surname, email.
+Example: We have a database of persons with characteristic name, surname, city.
 ```sql
 WITH count_duplicate AS
 (SELECT *, ROW_NUMBER() OVER (

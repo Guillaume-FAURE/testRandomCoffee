@@ -80,4 +80,4 @@ WITH count_duplicate AS
 PARTITION BY name, city, age ORDER BY name,city, age) 
 AS row_num FROM friends) 
 DELETE FROM count_duplicate
-WHERE row_num > 1
+WHERE row_num > 1User.email=UserDistinct.email WHERE User.id < UserDistinct.id;
